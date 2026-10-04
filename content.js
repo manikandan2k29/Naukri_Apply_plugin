@@ -68,12 +68,16 @@ async function handleSearchPage() {
     // Wait a random time while 'reading' the job title
     await randomDelay(2000, 4000);
 
-    // Click the job (this usually opens it in a new tab)
-    if (titleObj && typeof titleObj.click === 'function') {
-      titleObj.click();
-    } else {
-      jobPost.click();
-    }
+    // Simulate a full human click (mousedown -> mouseup -> click) to ensure React registers it
+    const clickTarget = titleObj || jobPost;
+    ['mousedown', 'mouseup', 'click'].forEach(eventType => {
+      clickTarget.dispatchEvent(new MouseEvent(eventType, {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        buttons: 1
+      }));
+    });
 
     // Wait a significant amount of time before opening the next job
     // This allows the new tab to open, load, apply, and close without overwhelming the browser
