@@ -68,14 +68,9 @@ async function handleSearchPage() {
     // Wait a random time while 'reading' the job title
     await randomDelay(2000, 4000);
 
-    // Naukri React components often ignore synthesized clicks (event.isTrusted = false).
-    // Instead, we construct the direct job URL and tell our background script to open it cleanly.
-    const jobId = jobPost.getAttribute('data-job-id');
-    const jobTitleText = jobTitle ? jobTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'job';
-    const jobUrl = `https://www.naukri.com/job-listings-${jobTitleText}-${jobId}`;
-    
-    console.log(`Opening URL: ${jobUrl}`);
-    chrome.runtime.sendMessage({ action: "openJobTab", url: jobUrl });
+    // As requested, click the <article> (jobPost) itself rather than the title
+    console.log(`Clicking on the article card for: ${jobTitle}`);
+    jobPost.click();
 
     // Remove the applied job from the search results page to keep the list clean
     console.log("Removing job card from search page...");
