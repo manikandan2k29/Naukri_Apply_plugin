@@ -79,6 +79,10 @@ async function handleSearchPage() {
       }));
     });
 
+    // Remove the applied job from the search results page to keep the list clean
+    console.log("Removing job card from search page...");
+    jobPost.remove();
+
     // Wait a significant amount of time before opening the next job
     // This allows the new tab to open, load, apply, and close without overwhelming the browser
     console.log("Waiting before clicking the next job...");
