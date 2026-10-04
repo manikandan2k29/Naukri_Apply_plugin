@@ -37,5 +37,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       const currentCount = result.appliedCount || 0;
       chrome.storage.local.set({ appliedCount: currentCount + 1 });
     });
+  } else if (message.action === "openJobTab") {
+    // Open job in a new tab without switching focus to it immediately
+    chrome.tabs.create({ url: message.url, active: false });
   }
 });
